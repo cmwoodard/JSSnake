@@ -1,0 +1,31 @@
+.grid {
+	/*border: 1px solid black;*/	
+	display: flex;                       /* establish flex container */
+	flex-wrap: wrap;                     /* enable flex items to wrap */
+	justify-content: space-around;
+	width: 480px;
+	justify: center;
+	margin: 10px;
+	
+}
+.cell{
+	flex: 0 0 10px;                       /* don't grow, don't shrink, width */
+	background-color: #988; 	
+	height: 10px;
+	border: 1px solid black;
+}
+
+.active{
+	background-color: black;
+}
+.inactive{
+	background-color: white;
+}
+
+#container{
+	margin: 10px;
+	border: 2px solid black;
+	width: 500px;
+	background-color: #711;
+
+}
