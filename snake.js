@@ -1,17 +1,29 @@
 $(document).ready(function(){
 	var gameLoop;
 	var keepPlaying = true;
+	var currentFood;
+	var score = 0;
+	
 	snake = new Snake();
-	render();	
-	
-	
-	
+	render();
+	currentFood = makeFood();
+	$(currentFood).addClass('food');
 	gameLoop =	setInterval(function(){ 
+		var headID = "#" + (snake.currentPosition[0][0]+1)+"x"+(snake.currentPosition[0][1]+1);
 		redraw();
+
+		if(currentFood == headID){
+			score += 1;
+			var scorestring = 'Score: ' + score;
+			$('#score').text(scorestring);
+
+			$(currentFood).removeClass('food');
+			currentFood = makeFood();
+			$(currentFood).addClass('food');
+		}
 		if(move()==false){			
 			clearInterval(gameLoop);
-		}
-						
+		}						
 	
 	}, 100);
 
@@ -19,22 +31,29 @@ $(document).ready(function(){
 		switch(event.which){
 			//left
 			case 37:
-				snake.direction = "left";
+				if (snake.direction != "right"){
+					snake.direction = "left";
+				}
 				break;
 			//up
 			case 38:
-				snake.direction = "up";
+				if (snake.direction != "down"){
+					snake.direction = "up";
+				}
 				break;
 			//right
 			case 39:
-				snake.direction = "right";
+				if (snake.direction != "left"){
+					snake.direction = "right";
+				}
 				break;
 			//down
 			case 40:
-				snake.direction = "down";
+				if (snake.direction != "up"){
+					snake.direction = "down";
+				}
 				break;
 		}
-		console.log(snake.direction);
     });								
 	
 });
@@ -45,6 +64,7 @@ function Snake() {
 	this.initialPosition=  [20,20],
 	this.direction=  "right",
 	this.currentPosition= [[20,20],[20,19],[20,18],[20,17],[20,16]];
+	
 }
 
 function Square(x, y) {	
@@ -66,23 +86,24 @@ for(i=0;i<40;i++){
 }
 
 function render(){
+	$('#titleContainer').append($('<h1 id="header">Snake!</h1>'));
 		for(i=0;i<grid.length;i++){
 			for(j=0;j<40;j++){
 				var htmlstring = '<div id = "'+ grid[i][j].id+ '" class = "'+grid[i][j].cssclass+'"> </div>';
 				$(grid[i][j].container).append($(htmlstring));		
 			}			
 		}		
+		$('#container').append($('<h3 id="score">Score: 0</h3>'));
+		//$('#container').append($('<p id="score2">0</p>'));
 };
 
 function move(){
 	var tempSnake = snake.currentPosition[0].slice();
-	console.log(tempSnake);	
 	if(snake.currentPosition[0][1] >= 41 || snake.currentPosition[0][1] <0 || snake.currentPosition[0][0] >40 || snake.currentPosition[0][0] <0 ){
 			return false;
 	}
 	switch(snake.direction){
-		case "right":						
-			//snake.currentPosition[0][1] += 1;
+		case "right":
 			tempSnake[1] += 1;			
 			break;			
 		case "left":
@@ -112,10 +133,17 @@ function redraw(){
 	for(s = 0; s<snake.currentPosition.length;s++){	
 		var currentGrid = grid[snake.currentPosition[s][0]][snake.currentPosition[s][1]];
 		var currentCell	= $("#" + currentGrid.x+"x"+currentGrid.y);
-		console.log("#" + currentGrid.x+"x"+currentGrid.y);	
+		//console.log("#" + currentGrid.x+"x"+currentGrid.y);	
 		currentCell.addClass('active');				
 	}
 	}
 	
-	
+}
+function makeFood(){
+	var randomRow = Math.floor(Math.random() * 40)+1;
+	var randomColumn = Math.floor(Math.random() * 40)+1;
+	var foodCell = "#" + randomRow+"x"+randomColumn;
+	//console.log("#" + randomRow+"x"+randomColumn);	
+	//foodCell.addClass('food');	
+	return foodCell;
 }

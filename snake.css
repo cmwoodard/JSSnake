@@ -4,7 +4,7 @@
 	flex-wrap: wrap;                     /* enable flex items to wrap */
 	justify-content: space-around;
 	width: 480px;
-	justify: center;
+
 	margin: 10px;
 	
 }
@@ -25,7 +25,21 @@
 #container{
 	margin: 10px;
 	border: 2px solid black;
-	width: 500px;
-	background-color: #711;
+	width: 620px;
+	background-color: lightcyan;
+	display: flex;                       /* establish flex container */
+	flex-wrap: wrap;                     /* enable flex items to wrap */
+}
 
+.food{
+	background-color: orangered;
+}
+#header{
+	margin: 10px;
+	text-align: center;
+	width: 600px;
+}
+#score{
+	flex: 0 0 15%;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
