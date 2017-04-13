@@ -13,13 +13,18 @@ $(document).ready(function(){
 		redraw();
 
 		if(currentFood == headID){
+			//increment score
 			score += 1;
 			var scorestring = 'Score: ' + score;
 			$('#score').text(scorestring);
 
+			//make new food
 			$(currentFood).removeClass('food');
 			currentFood = makeFood();
 			$(currentFood).addClass('food');
+			
+			//add body segment
+			snake.currentPosition.push([snake.currentPosition[0][0],snake.currentPosition[0][0]]);
 		}
 		if(move()==false){			
 			clearInterval(gameLoop);
@@ -63,7 +68,7 @@ var grid = [];
 function Snake() {
 	this.initialPosition=  [20,20],
 	this.direction=  "right",
-	this.currentPosition= [[20,20],[20,19],[20,18],[20,17],[20,16]];
+	this.currentPosition= [[20,20]];//,[20,19],[20,18],[20,17],[20,16]];
 	
 }
 
@@ -94,7 +99,6 @@ function render(){
 			}			
 		}		
 		$('#container').append($('<h3 id="score">Score: 0</h3>'));
-		//$('#container').append($('<p id="score2">0</p>'));
 };
 
 function move(){
